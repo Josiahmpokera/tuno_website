@@ -1,0 +1,52 @@
+@import "@heroui/react/styles";
+
+@layer base {
+  :root,
+  .light,
+  .default,
+  [data-theme="light"],
+  [data-theme="default"] {
+    --accent: #5b3df5;
+    --accent-foreground: #ffffff;
+    --focus: var(--accent);
+
+    --success: #10b981;
+    --success-foreground: #061a12;
+
+    --background: #ffffff;
+    --surface-secondary: #f6f7ff;
+    --surface-tertiary: #eef0ff;
+    --border: #e6e7f8;
+    --separator: #ececfa;
+  }
+
+  .dark,
+  [data-theme="dark"] {
+    --accent: #5b3df5;
+    --accent-foreground: #ffffff;
+    --focus: var(--accent);
+
+    --success: #10b981;
+    --success-foreground: #04130d;
+
+    --background: #05050b;
+    --surface: #0d0e1f;
+    --surface-secondary: #11122a;
+    --surface-tertiary: #141632;
+    --border: #262742;
+    --separator: #202139;
+  }
+}
+
+@theme inline {
+  --color-primary: var(--accent);
+  --color-primary-foreground: var(--accent-foreground);
+  --color-secondary: var(--success);
+  --color-secondary-foreground: #ffffff;
+  --color-brand-secondary: #10b981;
+}
+
+html,
+body {
+  height: 100%;
+}
