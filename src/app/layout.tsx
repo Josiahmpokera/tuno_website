@@ -1,14 +1,9 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
 import type { ReactNode } from "react"
 
+import tLetterLogo from "@/assets/icons/t_letter_logo.png"
 import "./globals.css"
 import { Providers } from "./providers"
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-})
 
 export const metadata: Metadata = {
   title: {
@@ -31,6 +26,9 @@ export const metadata: Metadata = {
     description:
       "A modern way for groups to handle savings (Vikoba) and group rotation (Mchezo).",
   },
+  icons: {
+    icon: [{ url: tLetterLogo.src }],
+  },
 }
 
 export default function RootLayout({
@@ -40,9 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body
-        className={`${inter.variable} min-h-dvh bg-background font-sans text-foreground antialiased`}
-      >
+      <body className="min-h-dvh bg-background font-sans text-foreground antialiased">
         <Providers>{children}</Providers>
       </body>
     </html>

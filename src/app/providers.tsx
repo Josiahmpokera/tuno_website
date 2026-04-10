@@ -14,20 +14,24 @@ type ThemeContextValue = {
 const ThemeContext = createContext<ThemeContextValue | null>(null)
 
 function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>(() => {
-    if (typeof window === "undefined") return "dark"
-    const stored = window.localStorage.getItem("tuno_theme")
-    if (stored === "dark" || stored === "light") return stored
-    return "dark"
-  })
+  const [theme, setThemeState] = useState<Theme>("dark")
+  const [themeReady, setThemeReady] = useState(false)
 
   useEffect(() => {
-    if (typeof document === "undefined") return
+    const stored = window.localStorage.getItem("tuno_theme")
+    if (stored === "dark" || stored === "light") {
+      queueMicrotask(() => setThemeState(stored))
+    }
+    queueMicrotask(() => setThemeReady(true))
+  }, [])
+
+  useEffect(() => {
+    if (!themeReady) return
     const root = document.documentElement
     if (theme === "dark") root.classList.add("dark")
     else root.classList.remove("dark")
     window.localStorage.setItem("tuno_theme", theme)
-  }, [theme])
+  }, [theme, themeReady])
 
   const value = useMemo<ThemeContextValue>(() => {
     return {
@@ -348,21 +352,23 @@ type I18nContextValue = {
 const I18nContext = createContext<I18nContextValue | null>(null)
 
 function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(() => {
-    if (typeof window === "undefined") return "sw"
+  const [locale, setLocaleState] = useState<Locale>("sw")
+  const [localeReady, setLocaleReady] = useState(false)
+
+  useEffect(() => {
     const stored = window.localStorage.getItem("tuno_locale")
-    if (stored === "sw" || stored === "en") return stored
-    const browser = navigator.language.toLowerCase()
-    if (browser.startsWith("sw")) return "sw"
-    return "sw"
-  })
+    if (stored === "sw" || stored === "en") {
+      queueMicrotask(() => setLocaleState(stored))
+    }
+    queueMicrotask(() => setLocaleReady(true))
+  }, [])
 
   useEffect(() => {
+    if (!localeReady) return
     window.localStorage.setItem("tuno_locale", locale)
-  }, [locale])
+  }, [locale, localeReady])
 
   useEffect(() => {
-    if (typeof document === "undefined") return
     document.documentElement.lang = locale
   }, [locale])
 

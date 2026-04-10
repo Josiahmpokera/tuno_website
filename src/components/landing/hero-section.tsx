@@ -7,7 +7,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 
 import { useI18n } from "@/app/providers"
-import { IconArrowRight, IconCoins, IconShieldCheck, IconUsers } from "@/components/icons"
+import { IconArrowRight, IconCoins, IconUsers } from "@/components/icons"
 import phoneImage from "@/assets/img/xNURI.png"
 import { cn } from "@/lib/cn"
 
@@ -48,7 +48,7 @@ export function HeroSection() {
                 {t.home.ctaPrimary} <IconArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                href="/#how-it-works"
+                href="/how-it-works"
                 className={cn(
                   "inline-flex h-11 items-center justify-center rounded-xl border border-divider/70 bg-background px-6 text-sm font-medium text-foreground shadow-sm",
                   "hover:bg-content2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
@@ -59,42 +59,9 @@ export function HeroSection() {
             </div>
 
             <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3">
-              <Card
-                variant="secondary"
-                className="border border-divider/70 p-4"
-              >
-                <div className="flex items-center gap-3">
-                  <IconUsers className="h-5 w-5 text-foreground/80" />
-                  <div className="space-y-0.5">
-                    <p className="text-sm font-medium">Group-ready</p>
-                    <p className="text-xs text-foreground/70">Roles & members</p>
-                  </div>
-                </div>
-              </Card>
-              <Card
-                variant="secondary"
-                className="border border-divider/70 p-4"
-              >
-                <div className="flex items-center gap-3">
-                  <IconCoins className="h-5 w-5 text-foreground/80" />
-                  <div className="space-y-0.5">
-                    <p className="text-sm font-medium">Contributions</p>
-                    <p className="text-xs text-foreground/70">Clear history</p>
-                  </div>
-                </div>
-              </Card>
-              <Card
-                variant="secondary"
-                className="col-span-2 border border-divider/70 p-4 sm:col-span-1"
-              >
-                <div className="flex items-center gap-3">
-                  <IconShieldCheck className="h-5 w-5 text-foreground/80" />
-                  <div className="space-y-0.5">
-                    <p className="text-sm font-medium">Transparent</p>
-                    <p className="text-xs text-foreground/70">Everyone in sync</p>
-                  </div>
-                </div>
-              </Card>
+           
+             
+        
             </div>
           </div>
 
