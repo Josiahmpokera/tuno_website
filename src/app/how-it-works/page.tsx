@@ -1,13 +1,12 @@
 "use client"
 
-import { Card } from "@heroui/react/card"
 import Link from "next/link"
 import { useMemo } from "react"
 
 import { Container } from "@/components/site/container"
 import { Footer } from "@/components/site/footer"
 import { Header } from "@/components/site/header"
-import { TocMobile, TocSidebar } from "@/components/docs/toc"
+import { TocMobile } from "@/components/docs/toc"
 
 type Section = {
   id: string
@@ -114,7 +113,7 @@ export default function HowItWorksPage() {
     <>
       <Header />
       <main>
-        {/* Header section - completely separate */}
+        {/* Header section */}
         <div className="border-b border-divider/70">
           <Container className="py-12 md:py-16">
             <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
@@ -132,7 +131,7 @@ export default function HowItWorksPage() {
           <TocMobile items={tocItems} />
           
           {/* Desktop layout */}
-          <div className="hidden md:flex md:gap-8">
+          <div className="hidden md:flex md:gap-12">
             {/* Left sidebar */}
             <div className="w-[240px] lg:w-[280px] flex-shrink-0">
               <div className="sticky top-24">
@@ -154,32 +153,43 @@ export default function HowItWorksPage() {
               </div>
             </div>
 
-            {/* Right content */}
-            <div className="flex-1 space-y-8">
-              {SECTIONS.map((s) => (
-                <section
-                  key={s.id}
-                  id={s.id}
-                  className="scroll-mt-24"
-                >
-                  <Card variant="secondary" className="border border-divider/70 p-6">
-                    <h2 className="text-xl font-semibold tracking-tight">{s.title}</h2>
-                    <p className="mt-2 text-sm text-foreground/75">{s.summary}</p>
+            {/* Right content - without cards, with horizontal separators */}
+            <div className="flex-1">
+              {SECTIONS.map((s, index) => (
+                <div key={s.id}>
+                  <section
+                    id={s.id}
+                    className="scroll-mt-24 py-8 first:pt-0 last:pb-0"
+                  >
+                    <h2 className="text-2xl font-semibold tracking-tight mb-3">
+                      {s.title}
+                    </h2>
+                    <p className="text-base text-foreground/75 leading-relaxed mb-4">
+                      {s.summary}
+                    </p>
                     {s.points.length ? (
-                      <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-foreground/80">
+                      <ul className="space-y-2">
                         {s.points.map((p) => (
-                          <li key={p}>{p}</li>
+                          <li key={p} className="flex items-start gap-2 text-sm text-foreground/80">
+                            <span className="text-primary mt-0.5">✓</span>
+                            <span>{p}</span>
+                          </li>
                         ))}
                       </ul>
                     ) : null}
-                  </Card>
-                </section>
+                  </section>
+                  
+                  {/* Horizontal line separator between sections */}
+                  {index < SECTIONS.length - 1 && (
+                    <div className="border-t border-divider/50 my-2" />
+                  )}
+                </div>
               ))}
 
-              <div className="flex justify-end">
+              <div className="mt-10 pt-6 border-t border-divider/50 flex justify-end">
                 <Link
                   href="/#how-it-works"
-                  className="inline-flex h-11 items-center justify-center rounded-xl border border-divider/70 bg-background px-6 text-sm font-medium text-foreground shadow-sm hover:bg-content2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+                  className="inline-flex h-11 items-center justify-center rounded-xl border border-divider/70 bg-background px-6 text-sm font-medium text-foreground shadow-sm hover:bg-content2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 transition-colors"
                 >
                   Back to home
                 </Link>
@@ -188,31 +198,42 @@ export default function HowItWorksPage() {
           </div>
 
           {/* Mobile layout */}
-          <div className="block md:hidden space-y-8">
-            {SECTIONS.map((s) => (
-              <section
-                key={s.id}
-                id={s.id}
-                className="scroll-mt-24"
-              >
-                <Card variant="secondary" className="border border-divider/70 p-6">
-                  <h2 className="text-xl font-semibold tracking-tight">{s.title}</h2>
-                  <p className="mt-2 text-sm text-foreground/75">{s.summary}</p>
+          <div className="block md:hidden">
+            {SECTIONS.map((s, index) => (
+              <div key={s.id}>
+                <section
+                  id={s.id}
+                  className="scroll-mt-24 py-6 first:pt-0 last:pb-0"
+                >
+                  <h2 className="text-xl font-semibold tracking-tight mb-2">
+                    {s.title}
+                  </h2>
+                  <p className="text-sm text-foreground/75 leading-relaxed mb-3">
+                    {s.summary}
+                  </p>
                   {s.points.length ? (
-                    <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-foreground/80">
+                    <ul className="space-y-1.5">
                       {s.points.map((p) => (
-                        <li key={p}>{p}</li>
+                        <li key={p} className="flex items-start gap-2 text-sm text-foreground/80">
+                          <span className="text-primary mt-0.5">✓</span>
+                          <span>{p}</span>
+                        </li>
                       ))}
                     </ul>
                   ) : null}
-                </Card>
-              </section>
+                </section>
+                
+                {/* Horizontal line separator between sections */}
+                {index < SECTIONS.length - 1 && (
+                  <div className="border-t border-divider/50" />
+                )}
+              </div>
             ))}
 
-            <div className="flex justify-end">
+            <div className="mt-8 pt-6 border-t border-divider/50 flex justify-end">
               <Link
                 href="/#how-it-works"
-                className="inline-flex h-11 items-center justify-center rounded-xl border border-divider/70 bg-background px-6 text-sm font-medium text-foreground shadow-sm hover:bg-content2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+                className="inline-flex h-11 items-center justify-center rounded-xl border border-divider/70 bg-background px-6 text-sm font-medium text-foreground shadow-sm hover:bg-content2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 transition-colors"
               >
                 Back to home
               </Link>
